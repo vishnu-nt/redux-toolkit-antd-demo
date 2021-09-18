@@ -1,55 +1,89 @@
-import { List, Avatar } from "antd";
-import { useState } from "react";
-import styled from "styled-components";
+import { useEffect, useState } from 'react';
+import { Avatar, List, Skeleton } from 'antd';
+import styled from 'styled-components';
+
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import CommentsDrawer from '../comments/CommentsDrawer';
+
 import type { Post } from "../../types";
-import CommentsDrawer from "../comments/CommentsDrawer";
+import { fetchUsers } from '../users/usersAPI';
+import { setUsers } from '../users/usersSlice';
+import { fetchPosts } from './postsAPI';
+import { setPosts } from './postsSlice';
+import { getNameInitials } from '../../utils/name';
 
 const ListItem = styled(List.Item)`
   background-color: #ffffff;
   margin-bottom: 16px;
 `;
 
-const CommentButton = styled.span`
+const ListItemContent = styled.span`
   cursor: pointer;
 `;
 
-const listData: Post[] = [];
-for (let i = 0; i < 23; i++) {
-  listData.push({
-    userId: i,
-    id: i,
-    title: `ant design part ${i}`,
-    body: "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.",
-  });
-}
-
 const Feeds = () => {
   const [selectedPost, setSelectedPost] = useState<Post>();
+  const { posts, status, userMap } = useAppSelector(state => ({
+    posts: state.posts.posts,
+    status: state.posts.status,
+    userMap: state.users,
+  }));
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    Promise.all([
+      fetchPosts(),
+      fetchUsers(),
+    ])
+    .then(([newPosts, users]) => {
+      dispatch(setPosts(newPosts));
+      dispatch(setUsers(users));
+    });
+  }, [dispatch]);
+
+  const isLoading = status === 'loading';
+
+  if (isLoading) {
+    return (
+      <>
+        {Array(2).fill(true).map((_, i) =>
+          <Skeleton key={i} active avatar paragraph={{ rows: 4 }} />)}
+      </>);
+  }
+
+  const renderListItem = (post: Post) => {
+    const user = userMap[post.userId];
+    return (
+      <ListItem
+        key={post.title}
+        actions={[<ListItemContent role="button">view comments {'>'}</ListItemContent>]}
+        onClick={() => setSelectedPost(post)}
+      >
+        <List.Item.Meta
+          avatar={<Avatar>{getNameInitials(user?.name)}</Avatar>}
+          title={post.title}
+          description={user?.username}
+        />
+        <ListItemContent>
+          {post.body}
+        </ListItemContent>
+      </ListItem>
+    );
+  }
+
   return (
-    <div>
+    <>
       <List
         itemLayout="vertical"
         size="large"
-        dataSource={listData}
-        renderItem={(item) => (
-          <ListItem
-            key={item.title}
-            actions={[<CommentButton role="button">view comments {'>'}</CommentButton>]}
-            onClick={() => setSelectedPost(item)}
-          >
-            <List.Item.Meta
-              avatar={<Avatar>{item.id}</Avatar>}
-              title={item.title}
-            />
-            {item.body}
-          </ListItem>
-        )}
+        dataSource={posts}
+        renderItem={(post) => renderListItem(post)}
       />
       <CommentsDrawer
         post={selectedPost}
         hideComments={() => setSelectedPost(undefined)}
       />
-    </div>
+    </>
   );
 };
 

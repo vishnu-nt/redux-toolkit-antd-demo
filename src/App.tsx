@@ -9,12 +9,12 @@ import Feeds from './features/posts/Posts';
 const { Content } = Layout;
 
 const Container = styled(Content)`
-  max-width: 976px;
+  width: 976px;
   margin: 64px auto 0;
 `;
 
 const Main = styled.div`
-  min-height: calc(100vh - 48px - 110px);
+  min-height: calc(100vh - 48px - 86px);
   padding: 24px;
 `;
 
