@@ -1,3 +1,10 @@
+/**
+ * Returns initials froms user name to display on Avatar
+ * @example John Doe returns JD
+ * @example John returns JO
+ * @param {string} name User name
+ * @returns {string}
+ */
 export const getNameInitials = (name: string = '') => {
   const [firstName, lastName] = name.split(' ');
   if (!firstName) return "";

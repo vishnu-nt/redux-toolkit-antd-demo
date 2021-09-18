@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Comment } from '../../types';
 
-interface CommentState {
+export interface CommentState {
   // Avoiding `Map` since redux recommends serializable value in store
   comments: {
     [postId: number]: Comment[]
