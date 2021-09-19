@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Comment from "../../components/Comment";
 import CommentEditor from "../../components/Comment/CommentEditor";
 import { postComment, fetchCommentsByPostId } from "./commentsAPI";
-import { addComment, setComments } from "./commentSlice";
+import { addComment, setComments, setLoading } from "./commentSlice";
 
 import type { Post, Comment as IComment } from "../../types";
 
@@ -27,14 +27,16 @@ const CommentsDrawer = (props: IProps) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (props.post?.id) {
+    if (props.post?.id && !commentMap[props.post?.id]) {
+      dispatch(setLoading('loading'));
       fetchCommentsByPostId(props.post?.id).then((postComments) =>
         dispatch(
           setComments({ comments: postComments, postId: props.post!.id })
         )
-      );
+      )
+      .catch(() => dispatch(setLoading('failed')))
     }
-  }, [props.post, dispatch]);
+  }, [props.post, dispatch, commentMap]);
 
   const onClose = () => {
     props.hideComments();

@@ -1,9 +1,10 @@
 import { Comment, Avatar, Form, Button, Input, Select } from 'antd';
 import { ChangeEvent, useState } from 'react';
+import { getNameInitials } from '../../utils/name';
 
 const { TextArea } = Input;
 
-const TAGS = ['Apples', 'Nails', 'Bananas', 'Helicopters'];
+const TAGS = ['Tag1', 'Tag2', 'Tag3', 'Tag4'];
 
 interface Props {
   onSubmit: (comment: string, tags?: string[]) => Promise<void>,
@@ -68,10 +69,9 @@ const CommentEditor = (props: Props) => {
   return (
     <Comment
       avatar={
-        <Avatar
-          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-          alt="Han Solo"
-        />
+        <Avatar>
+          {getNameInitials('You')}
+        </Avatar>
       }
       content={editor}
     />

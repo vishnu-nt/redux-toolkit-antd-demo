@@ -18,6 +18,9 @@ export const commentSlice = createSlice({
   name: 'comments',
   initialState,
   reducers: {
+    setLoading: (state, action: PayloadAction<CommentState['status']>) => {
+      state.status = action.payload;
+    },
     setComments: (state, action: PayloadAction<{ comments: Comment[], postId: number }>) => {
       state.comments[action.payload.postId] = action.payload.comments;
       state.status = 'idle';
@@ -30,6 +33,6 @@ export const commentSlice = createSlice({
   }
 });
 
-export const { setComments, addComment } = commentSlice.actions;
+export const { setComments, addComment, setLoading } = commentSlice.actions;
 
 export default commentSlice.reducer;
