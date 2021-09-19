@@ -69,3 +69,9 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 - Styled Components
 - Ant design
 - {JSON} Placeholder for mock APIs
+
+
+## Screenshots
+![homepage](https://user-images.githubusercontent.com/22218316/133926650-3f0d8002-d332-443b-a341-784ac36f66cf.png)
+![reply](https://user-images.githubusercontent.com/22218316/133926659-f67a64be-f8f8-4d08-8538-15b339527d13.png)
+![search](https://user-images.githubusercontent.com/22218316/133926660-d68c7f5c-4bb6-464e-97c0-3b657ef14a36.png)
