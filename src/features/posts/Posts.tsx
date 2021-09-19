@@ -24,7 +24,10 @@ const ListItemContent = styled.span`
 const Feeds = () => {
   const [selectedPost, setSelectedPost] = useState<Post>();
   const { posts, status, userMap } = useAppSelector(state => ({
-    posts: state.posts.posts,
+    // Filter posts if `filter` is set else show all
+    posts: state.posts.filters.userIds
+      ? state.posts.posts.filter(post => state.posts.filters.userIds?.includes(post.userId))
+      : state.posts.posts,
     status: state.posts.status,
     userMap: state.users,
   }));
@@ -56,7 +59,7 @@ const Feeds = () => {
     return (
       <ListItem
         key={post.title}
-        actions={[<ListItemContent role="button">view comments {'>'}</ListItemContent>]}
+        actions={[<ListItemContent role="button">View comments {'>'}</ListItemContent>]}
         onClick={() => setSelectedPost(post)}
       >
         <List.Item.Meta
