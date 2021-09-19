@@ -1,5 +1,5 @@
 {
-  "name": "redux-antd",
+  "name": "redux-toolkit-antd-demo",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

@@ -42,3 +42,30 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+\
+&nbsp;
+\
+&nbsp;
+
+# Summary
+## Web UI that renders a list of media objects (posts & comments):
+- Lists Posts by all users.
+- For a specific post when selected, its comments will shown on the right side `Drawer`.
+- Actions:
+  - Comment - user can add a reply
+  - Tag action - users can add one or more custom tags to comments.
+  - User will receive tag suggestions while typing in the new tag.
+  - Filter posts by username
+
+\
+&nbsp;
+## Stack used:
+- @reduxjs/toolkit
+  - Why?\
+  Redux strongly recommends [Redux Toolkit](https://redux.js.org/style-guide/style-guide#use-redux-toolkit-for-writing-redux-logic) for writing redux logic
+
+- Typescript
+- Styled Components
+- Ant design
+- {JSON} Placeholder for mock APIs
